@@ -22,7 +22,7 @@ defmodule Fitbot.Plugin.Hello do
     {:noreply, [], state}
   end
 
-  defp process(%{client: client} = event) do
-    ExIrc.Client.msg client, :privmsg, event.channel || event.sender.nick, "Hello #{event.sender.nick}!"
+  defp process(%{client: client, channel: channel, sender: %{nick: nick}}) do
+    ExIrc.Client.msg client, :privmsg, channel || nick, "Hello #{nick}!"
   end
 end
