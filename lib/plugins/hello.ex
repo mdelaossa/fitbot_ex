@@ -22,6 +22,9 @@ defmodule Fitbot.Plugin.Hello do
     {:noreply, [], state}
   end
 
+  defp process(%{client: client, channel: channel, sender: %{nick: nick}, args: args}) when length(args) > 0 do
+    ExIrc.Client.msg client, :privmsg, channel || nick, "Hello #{Enum.join(args, " ")}!"
+  end
   defp process(%{client: client, channel: channel, sender: %{nick: nick}}) do
     ExIrc.Client.msg client, :privmsg, channel || nick, "Hello #{nick}!"
   end
